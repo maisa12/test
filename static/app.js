@@ -1,49 +1,55 @@
+
 function checkBox(array){
-    var chk = document.querySelector(".checkbox");
+  var chk = document.querySelector(".checkbox");
+  var first = chk.firstElementChild;
+  while (first) { 
+    first.remove(); 
+    first = chk.firstElementChild; 
+} 
+  for(let item of array){
+    
       var box = document.createElement("input");
       var b = document.createElement("p");
      chk.appendChild(b);
       box.setAttribute("type", "checkbox"); 
-      box.value = array;
+      box.value = item;
       b.appendChild(box);
-      var text = document.createTextNode(array);
+      var text = document.createTextNode(item);
      b.appendChild(text)
+  }
    }
-   
-   class TodoList {
-     constructor(){
-       this.output=[];
+   var list;
+  function getData() {
+     fetch("/getpost").then((x)=>x.json()).then((x)=>{
+       list = x.note;
+       checkBox(list);
+    })
+  }
+  getData();
+   async function postData() {
+    var input = document.querySelector("input");
+    var list = {notes: input.value}
+    const response = await fetch("/post", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(list)
+    }).then(input.value = "").then(getData());
+  }
+  async function delte(){
+    var del ={delete: []};
+    var checked = document.querySelector(".checkbox"); 
+     for(let t=0; t<checked.children.length; t++){
+       if(checked.children[t].firstChild.checked == true){
+       del.delete.push(checked.children[t].firstChild.value)
      }
-     add(){
-       var input = document.querySelector("input");
-       if(this.output.filter((x)=>x===input.value).length==0){
-       this.output.push(input.value);
-      checkBox(input.value);
-         input.value="";
-       }
-       
+    }
+     const response = await fetch("/delete", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(del)
+    }).then(getData());
      }
-     delete(){ 
-       var del = [];
-      var checked = document.querySelector(".checkbox"); 
-       for(let t=0; t<checked.children.length; t++){
-         if(checked.children[t].firstChild.checked == true){
-         del.push(t)
-       } 
-       }
-     var k;
-        for(let z=0; z<del.length; z++){
-       if(z==0){
-         k=del[0]
-       }
-          else{
-            k=del[z]-z
-          }
-      this.output = this.output.filter((y)=>y!==checked.children[k].firstChild.value);       checked.children[k].remove();
-        }
-      
-     }  
-   }
-   var array = new TodoList();
-   
-   
