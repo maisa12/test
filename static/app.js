@@ -21,7 +21,7 @@ function checkBox(array){
    var list;
   function getData() {
      fetch("/getpost").then((x)=>x.json()).then((x)=>{
-       list = x.note;
+       list = x;
        checkBox(list);
     })
   }
