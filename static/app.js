@@ -13,8 +13,9 @@ function checkBox(array){
      chk.appendChild(b);
       box.setAttribute("type", "checkbox"); 
       box.value = item;
+      box.id = item.id;
       b.appendChild(box);
-      var text = document.createTextNode(item);
+      var text = document.createTextNode(item.value);
      b.appendChild(text)
   }
    }
@@ -42,7 +43,7 @@ function checkBox(array){
     var checked = document.querySelector(".checkbox"); 
      for(let t=0; t<checked.children.length; t++){
        if(checked.children[t].firstChild.checked == true){
-       del.delete.push(checked.children[t].firstChild.value)
+       del.delete.push(checked.children[t].firstChild.id)
      }
     }
      const response = await fetch("/delete", {
@@ -52,4 +53,5 @@ function checkBox(array){
       },
       body: JSON.stringify(del)
     }).then(getData());
+    
      }
