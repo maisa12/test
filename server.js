@@ -13,16 +13,22 @@ app.get('/getpost',(req,res)=>{
   res.send(JSON.stringify(todoList))
 })
 app.post('/post', jsonParser, function (req, res) {
-  todoList.push({id: id, value: req.body.notes})
+  todoList.push({id: id, value: req.body.notes, done: false})
   id++;
 })
 app.post('/delete', jsonParser, function (req, res) {
-  for(let d of req.body.delete){
-  for(let i = 0; i < todoList.length; i++){
-    if(d==todoList[i].id)todoList.splice(i,1)
-  }
-  }
+ todoList = todoList.filter(x=>req.body.delete.indexOf(x.id.toString())===-1)
 })
+app.post('/done', jsonParser, function (req, res) {
+  todoList.filter(x=>req.body.done.indexOf(x.id.toString())!==-1).forEach(x=>x.done = true);
+  console.log(todoList);
+  
+ })
+ app.post('/undone', jsonParser, function (req, res) {
+  todoList.filter(x=>req.body.undone.indexOf(x.id.toString())!==-1).forEach(x=>x.done = false);
+  console.log(todoList);
+ })
+ 
 app.use('/static', express.static(__dirname+'/static'));
 app.use('/templates', express.static(__dirname+'/templates'));
 app.listen(port, ()=>console.log(`Server is listening: ${port}`))
