@@ -21,13 +21,10 @@ app.post('/delete', jsonParser, function (req, res) {
 })
 app.post('/done', jsonParser, function (req, res) {
   todoList.filter(x=>req.body.done.indexOf(x.id.toString())!==-1).forEach(x=>x.done = true);
-  console.log(todoList);
-  
- })
+  })
  app.post('/undone', jsonParser, function (req, res) {
   todoList.filter(x=>req.body.undone.indexOf(x.id.toString())!==-1).forEach(x=>x.done = false);
-  console.log(todoList);
- })
+})
  
 app.use('/static', express.static(__dirname+'/static'));
 app.use('/templates', express.static(__dirname+'/templates'));
