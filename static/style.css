@@ -10,7 +10,8 @@ h1{
 }
 body{
     background-color: GhostWhite;
-   
+    margin: 0px;
+    height: 100%;
 }
 .inputtext{
     width: 50%;
@@ -79,7 +80,7 @@ main{
 .newlistbutton{
     color: lightblue;
     position: absolute;
-    left: 660px;
+    right: 3px;
     background-image: url(/static/img/done.png);
     background-size: contain;
     background-repeat: no-repeat;
@@ -92,7 +93,7 @@ main{
 .unlistbutton{
     color: lightblue;
     position: absolute;
-    left: 650px;
+    right: 3px;
     background-image: url(/static/img/undone.png);
     background-size: contain;
     background-repeat: no-repeat;
@@ -105,17 +106,21 @@ main{
 .newlistbutton:hover{
     border-width: 2px;
     border-color: lime;
+    color: lime;
 }
 .unlistbutton:hover{
     border-width: 2px;
     border-color: red;
+    color: cornflowerBlue;
 }
 h2{
     position: relative;
     bottom: 0px;
-    text-align: center;
-   
     font-size: 15px;
     margin-bottom: 0px;
+    text-align: center;
 
+}
+button{
+    cursor: pointer;
 }
