@@ -11,21 +11,25 @@ function checkBox(array){
       var box = document.createElement("input");
       var b = document.createElement("p");
      chk.appendChild(b);
-      box.setAttribute("type", "checkbox"); 
-      box.value = item;
+      box.setAttribute("type", "checkbox");
+      b.setAttribute("class", "newlistp"); 
+      box.setAttribute("class", "newlistbox");
+      box.value = item.value;
       box.id = item.id;
       b.appendChild(box);
       var button = document.createElement("button");
-      button.id = item.id;
+      
       if(item.done===false){
-      var text = document.createTextNode(item.value+"  ");
+        button.setAttribute("class", "newlistbutton");
+      var text = document.createTextNode(item.value);
      b.appendChild(text)
      b.appendChild(button)
      var doneText = document.createTextNode("done");
      button.appendChild(doneText)
      button.addEventListener("click",function(){
+       var buttonId = item.id;
       var doneArray ={done: []};
-    doneArray.done.push(button.id)
+    doneArray.done.push(buttonId)
         fetch("/done", {
         method: 'POST',
         headers: {
@@ -37,16 +41,18 @@ function checkBox(array){
        })
       }
       else{
+        button.setAttribute("class", "unlistbutton");
         var str = document.createElement("strike");
-        var strs = document.createTextNode(item.value+"  ");
+        var strs = document.createTextNode(item.value);
         b.appendChild(str);
         str.appendChild(strs);
         b.appendChild(button)
         var undoneText = document.createTextNode("undone");
         button.appendChild(undoneText)
          button.addEventListener("click",function(){
+          var buttonId = item.id;
       var undoneArray ={undone: []};
-    undoneArray.undone.push(button.id)
+    undoneArray.undone.push(buttonId)
         fetch("/undone", {
         method: 'POST',
         headers: {

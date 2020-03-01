@@ -1,14 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Array page</title>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/img/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicon-16x16.png">
+    <title>Array page</title>
+
 </head>
-
 <body>
-   
-<p><input type="text" autofocus><button onclick="postData()">submit</button><button onclick="delte()">delete</button></p> 
-<p class="output"><div class = "checkbox"></div></p>
-<script src="/static/app.js"></script>
-
+    <header>
+ <h1><i class="fa fa-list-ul"></i><em>  Online</em> Notepad</h1>
+    </header>
+    <nav>
+    <p>  
+        <input type="text" class="inputtext" placeholder="Add your note here">
+        <button class="but"  onclick="postData()"><i class="fa fa-plus"></i> Add</button>
+        <button class="but" onclick="delte()"><i class="fa fa-trash"></i> Delete</button>
+    </p> 
+    </nav> 
+    <main>
+        <span class="tdlist">
+        List
+        </span> 
+    <p class="output">
+        <div class = "checkbox">
+        </div>
+    </p>
+   </main>
+   <footer>
+       <h2>copyright 2020 N&M Group All rights reserved<h2>
+   </footer>
+    <script src="/static/app.js"></script>
 </body>
 </html>
