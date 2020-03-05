@@ -1,5 +1,3 @@
-
- 
 function checkBox(array){
   var chk = document.querySelector(".checkbox");
   var first = chk.firstElementChild;
