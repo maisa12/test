@@ -30,7 +30,7 @@ app.post('/post', jsonParser, function (req, res) {
 })
 app.get('/papers',(req,res)=>{
   var array = [];
-  papers.map(x=>array.push(x.name))
+  papers.map(x=>array.push({name:x.name, id:x.id}))
   res.send(array)
 })
 app.get('/papers/:id',(req,res)=>{
