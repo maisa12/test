@@ -1,57 +1,42 @@
 const express = require('express');
-
+var cors = require('cors');
+const {paperList, noteList, deletePaper, deleteNote, done, addPaper, addNote} = require('./query');
 const app = express();
 const port = 8000;
 var bodyParser = require('body-parser');
-var id = 0;
-var todoList = [];
-const papers =[
-  {
-      name: 'Paper N1',
-      id:1,
-      notes: [{value:"test1", id:0, done: true, check:false}, {value:"test2", id:1, done: false, check:false}]
-  },
-  {
-      name: 'Paper N2',
-      id:2,
-      notes: [{value:"test1", id:0, done: true, check:false}, {value:"test2", id:1, done: false, check:false}]
-  }
-] 
+app.use(cors());
 var jsonParser = bodyParser.json();
-app.get('/',(req,res)=>{
-  res.sendFile('./templates/index.html',{root: __dirname})
+
+app.post('/newpaper', jsonParser,async function (req, res) {
+  await addPaper(req.body.name)
+  res.end("Note is added")
 })
-app.get('/getpost',(req,res)=>{
-  res.send(JSON.stringify(todoList))
+app.post('/newnote/:id', jsonParser, async function (req, res) {
+  await addNote(req.params.id, req.body.note) 
+  res.end("Paper is added")
 })
-app.post('/post', jsonParser, function (req, res) {
-  todoList.push({id: id, value: req.body.notes, done: false})
-  id++;
-})
-app.get('/papers',(req,res)=>{
+app.get('/papers',async(req,res)=>{
   var array = [];
-  papers.map(x=>array.push({name:x.name, id:x.id}))
-  res.send(array)
+  var arrayOfPapers = await paperList();
+  arrayOfPapers.map(x=>array.push({name:x.paper_name, id:x.id}))
+  res.send(JSON.stringify(array))
 })
-app.get('/papers/:id',(req,res)=>{
-  var note = papers.filter(x=>x.id===Number(req.params.id));
-  if(note.length===0){
-    res.send("This paper doesn't exist")
-  }
-  else{
-  res.send(note[0].notes)
-  }
+app.get('/papers/:id',async(req,res)=>{
+  var arrayOfNotes = await noteList(req.params.id);
+  res.send(arrayOfNotes)
 })
-app.post('/delete', jsonParser, function (req, res) {
- todoList = todoList.filter(x=>req.body.delete.indexOf(x.id.toString())===-1)
+app.get('/delete/:is/:id',async(req,res)=>{
+ await deleteNote(req.params.id, req.params.is)
+  res.send("Note is deleted")
 })
-app.post('/done', jsonParser, function (req, res) {
-  todoList.filter(x=>req.body.done.indexOf(x.id)!==-1).forEach(x=>x.done = true);
+app.get('/del/:id',async(req,res)=>{
+ await deletePaper(req.params.id);
+   res.send("Paper is deleted")
  })
- app.post('/undone', jsonParser, function (req, res) {
-  todoList.filter(x=>req.body.undone.indexOf(x.id)!==-1).forEach(x=>x.done = false);
-})
- 
+app.get('/done/:is/:id',async(req,res)=>{
+  await done(req.params.id, req.params.is)
+  res.send("done")
+ })
 app.use('/static', express.static(__dirname+'/static'));
 app.use('/templates', express.static(__dirname+'/templates'));
 app.listen(port, ()=>console.log(`Server is listening: ${port}`))
